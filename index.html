@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>จักรวาลคณิตศาสตร์ By ครูรัตนา สีฟ้า</title>
+<meta name="description" content="รวมคลิปการสอนและลิงก์ผลงานคณิตศาสตร์ โดยครูรัตนา สีฟ้า">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g1:#020b2e; --g2:#0a2a7a; --g3:#1565d8; --g4:#38b6ff;
+  --glass:rgba(255,255,255,.10); --glass2:rgba(255,255,255,.16);
+  --border:rgba(255,255,255,.28); --txt:#eef5ff; --muted:#b6cdf5;
+  --accent:#5cc8ff; --danger:#ff6b81; --ok:#4ade80;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Prompt',system-ui,sans-serif;color:var(--txt);min-height:100vh;
+  background:linear-gradient(135deg,var(--g1),var(--g2) 45%,var(--g3) 80%,var(--g4));
+  background-attachment:fixed;overflow-x:hidden}
+.orb{position:fixed;border-radius:50%;filter:blur(70px);opacity:.55;z-index:0;animation:float 16s ease-in-out infinite;pointer-events:none}
+.orb.a{width:380px;height:380px;background:#2f7bff;top:-90px;left:-80px}
+.orb.b{width:320px;height:320px;background:#27d3ff;bottom:-80px;right:-60px;animation-delay:-6s}
+.orb.c{width:240px;height:240px;background:#7a5cff;top:45%;left:55%;animation-delay:-11s;opacity:.35}
+@keyframes float{50%{transform:translate(40px,-50px) scale(1.12)}}
+.sym{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.sym span{position:absolute;color:rgba(255,255,255,.07);font-weight:600;animation:rise linear infinite}
+@keyframes rise{from{transform:translateY(110vh) rotate(0)}to{transform:translateY(-20vh) rotate(360deg)}}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:20px 18px 70px}
+.glass{background:var(--glass);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);
+  border:1px solid var(--border);border-radius:22px;box-shadow:0 10px 40px rgba(0,10,60,.35), inset 0 1px 0 rgba(255,255,255,.25)}
+nav{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;margin-bottom:22px;gap:10px;flex-wrap:wrap}
+nav .brand{font-weight:600;letter-spacing:.3px}
+.btn{font-family:inherit;cursor:pointer;border:1px solid var(--border);color:var(--txt);background:var(--glass2);
+  padding:9px 18px;border-radius:999px;font-size:.92rem;transition:.25s;backdrop-filter:blur(8px);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:rgba(255,255,255,.28);transform:translateY(-2px)}
+.btn.primary{background:linear-gradient(135deg,#1e7bff,#35c4ff);border-color:transparent;font-weight:500}
+.btn.danger{background:rgba(255,107,129,.25);border-color:rgba(255,107,129,.5)}
+.btn.sm{padding:5px 12px;font-size:.8rem}
+.hero{text-align:center;padding:54px 24px 46px;margin-bottom:28px;position:relative}
+.hero .badge{display:inline-block;padding:5px 16px;border-radius:99px;background:rgba(255,255,255,.14);border:1px solid var(--border);font-size:.85rem;margin-bottom:16px;color:var(--muted)}
+.hero h1{font-size:clamp(2rem,6vw,3.7rem);font-weight:700;line-height:1.2;
+  background:linear-gradient(90deg,#fff,#a8dcff,#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .by{font-size:clamp(1.05rem,2.6vw,1.5rem);margin-top:10px;color:#cfe6ff}
+.hero p.sub{max-width:680px;margin:16px auto 0;color:var(--muted);line-height:1.8}
+.hero .acts{margin-top:24px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.tools{display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:14px 18px;margin-bottom:22px}
+.search{flex:1;min-width:200px;background:rgba(255,255,255,.12);border:1px solid var(--border);color:var(--txt);padding:10px 16px;border-radius:99px;font-family:inherit;font-size:.95rem;outline:none}
+.search::placeholder{color:#9fb8e6}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{cursor:pointer;padding:7px 16px;border-radius:99px;border:1px solid var(--border);background:rgba(255,255,255,.08);font-size:.88rem;transition:.2s;font-family:inherit;color:var(--txt)}
+.chip.on,.chip:hover{background:linear-gradient(135deg,#1e7bff,#35c4ff);border-color:transparent}
+h2.sec{font-size:1.35rem;margin:6px 4px 14px;display:flex;align-items:center;gap:10px}
+h2.sec::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px;margin-bottom:34px}
+.card{overflow:hidden;transition:.3s;display:flex;flex-direction:column;cursor:pointer;position:relative}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 50px rgba(0,30,120,.55), inset 0 1px 0 rgba(255,255,255,.3)}
+.thumb{aspect-ratio:16/9;background:linear-gradient(135deg,#0d3aa8,#1a8fe8);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb .ico{font-size:3rem;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4))}
+.play{position:absolute;width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.25);backdrop-filter:blur(8px);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:.25s}
+.card:hover .play{transform:scale(1.15);background:rgba(255,255,255,.4)}
+.cbody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
+.cat{font-size:.75rem;color:var(--accent);font-weight:500}
+.ctitle{font-weight:600;line-height:1.4}
+.cdesc{font-size:.85rem;color:var(--muted);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cadm{display:flex;gap:6px;margin-top:auto;padding-top:8px}
+.links{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-bottom:34px}
+.lk{display:flex;align-items:center;gap:14px;padding:14px 18px;text-decoration:none;color:var(--txt);transition:.25s;position:relative}
+.lk:hover{transform:translateY(-4px);background:rgba(255,255,255,.2)}
+.lk .li{font-size:1.7rem;width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#1e7bff,#35c4ff);display:flex;align-items:center;justify-content:center;flex:none}
+.lk b{display:block;font-weight:500}.lk small{color:var(--muted);font-size:.8rem}
+.lk .cadm{position:absolute;right:10px;top:8px;padding:0}
+.empty{text-align:center;padding:40px;color:var(--muted)}
+.about{padding:26px 28px;line-height:1.9;color:#dbe9ff;margin-bottom:30px;white-space:pre-line}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:20px}
+.modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(2,8,40,.7);backdrop-filter:blur(6px)}
+.modal.open{display:flex}
+.mbox{width:min(900px,100%);max-height:94vh;overflow:auto;padding:20px;position:relative;background:rgba(15,40,120,.55)}
+.mclose{position:absolute;right:14px;top:10px;font-size:1.6rem;cursor:pointer;background:none;border:0;color:#fff}
+.frame{aspect-ratio:16/9;width:100%;border:0;border-radius:14px;background:#000}
+.mbox h3{margin:14px 0 6px}
+form.f{display:grid;gap:12px}
+form.f label{font-size:.85rem;color:var(--muted);display:grid;gap:5px}
+form.f input,form.f select,form.f textarea{font-family:inherit;font-size:.95rem;padding:10px 14px;border-radius:12px;border:1px solid var(--border);background:rgba(255,255,255,.12);color:var(--txt);outline:none}
+form.f select option{color:#000}
+form.f textarea{min-height:84px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.row{grid-template-columns:1fr}}
+.admbar{display:none;padding:12px 18px;margin-bottom:20px;gap:10px;flex-wrap:wrap;align-items:center;border-color:rgba(74,222,128,.5)}
+body.admin .admbar{display:flex}
+.cadm,.admonly{display:none}
+body.admin .cadm{display:flex}
+body.admin .admonly{display:inline-flex}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);padding:12px 22px;z-index:99;transition:.35s;opacity:0}
+.toast.show{transform:translateX(-50%);opacity:1}
+.warn{padding:12px 18px;margin-bottom:18px;border-color:rgba(255,200,80,.6);color:#ffe9b0;display:none;line-height:1.6;font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
+<div class="sym" id="sym"></div>
+
+<div class="wrap">
+  <nav class="glass">
+    <div class="brand">∑ จักรวาลคณิตศาสตร์</div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <span id="who" style="font-size:.85rem;color:var(--muted)"></span>
+      <button class="btn sm" id="btnLogin">🔐 ครูเข้าสู่ระบบ</button>
+      <button class="btn sm" id="btnLogout" style="display:none">ออกจากระบบ</button>
+    </div>
+  </nav>
+
+  <div class="glass warn" id="warn"></div>
+
+  <header class="glass hero">
+    <span class="badge" id="hBadge">✨ ผลงานการสอนคณิตศาสตร์</span>
+    <h1 id="hTitle">จักรวาลคณิตศาสตร์</h1>
+    <div class="by" id="hBy">By ครูรัตนา สีฟ้า</div>
+    <p class="sub" id="hSub">รวมคลิปการสอน สื่อ และลิงก์ผลงานคณิตศาสตร์ ให้เรียนรู้ได้ทุกที่ทุกเวลา</p>
+    <div class="acts">
+      <a class="btn primary" href="#videos">▶ ดูคลิปการสอน</a>
+      <a class="btn" href="#links">🔗 ลิงก์อื่นๆ</a>
+      <button class="btn admonly" id="btnSite">⚙️ แก้ไขหัวเว็บ</button>
+    </div>
+  </header>
+
+  <div class="glass admbar">
+    <b>🛠 โหมดครู</b>
+    <button class="btn primary sm" id="btnAddVideo">+ เพิ่มคลิปวิดีโอ</button>
+    <button class="btn primary sm" id="btnAddLink">+ เพิ่มลิงก์</button>
+    <button class="btn sm" id="btnSeed">📥 ใส่ตัวอย่างข้อมูล</button>
+  </div>
+
+  <section id="videos">
+    <h2 class="sec">🎬 คลิปการสอน</h2>
+    <div class="glass tools">
+      <input class="search" id="q" placeholder="🔍 ค้นหาคลิป...">
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="grid" id="vgrid"></div>
+  </section>
+
+  <section id="links">
+    <h2 class="sec">🔗 ลิงก์อื่นๆ</h2>
+    <div class="links" id="lgrid"></div>
+  </section>
+
+  <section id="aboutSec">
+    <h2 class="sec">👩‍🏫 เกี่ยวกับครู</h2>
+    <div class="glass about" id="about"></div>
+  </section>
+
+  <footer>© <span id="yr"></span> จักรวาลคณิตศาสตร์ By ครูรัตนา สีฟ้า</footer>
+</div>
+
+<!-- Player modal -->
+<div class="modal" id="mPlay"><div class="glass mbox">
+  <button class="mclose" data-close>×</button>
+  <div id="pBox"></div><h3 id="pTitle"></h3><p id="pDesc" style="color:var(--muted);line-height:1.7"></p>
+  <a class="btn sm" id="pOpen" target="_blank" rel="noopener" style="margin-top:12px">เปิดในแท็บใหม่ ↗</a>
+</div></div>
+
+<!-- Item form modal -->
+<div class="modal" id="mItem"><div class="glass mbox" style="max-width:560px">
+  <button class="mclose" data-close>×</button>
+  <h3 id="fTitle">เพิ่มรายการ</h3>
+  <form class="f" id="fItem">
+    <label>ชื่อ<input id="iTitle" required></label>
+    <label>ลิงก์ URL (YouTube / Facebook / Google Drive / Vimeo / เว็บอื่น)<input id="iUrl" type="url" required placeholder="https://..."></label>
+    <div class="row">
+      <label>ประเภท<select id="iType"><option value="video">วิดีโอ (ฝังเล่นในเว็บ)</option><option value="link">ลิงก์ทั่วไป</option></select></label>
+      <label>หมวดหมู่<input id="iCat" list="catList" placeholder="เช่น ม.1, สมการ"><datalist id="catList"></datalist></label>
+    </div>
+    <div class="row">
+      <label>ไอคอน (อีโมจิ สำหรับลิงก์)<input id="iIcon" placeholder="📘" maxlength="4"></label>
+      <label>ลำดับ (เลขน้อยอยู่ก่อน)<input id="iOrder" type="number" value="100"></label>
+    </div>
+    <label>รายละเอียด<textarea id="iDesc"></textarea></label>
+    <button class="btn primary" type="submit" style="justify-content:center">💾 บันทึก</button>
+  </form>
+</div></div>
+
+<!-- Site form modal -->
+<div class="modal" id="mSite"><div class="glass mbox" style="max-width:560px">
+  <button class="mclose" data-close>×</button>
+  <h3>แก้ไขหัวเว็บ / เกี่ยวกับครู</h3>
+  <form class="f" id="fSite">
+    <label>ป้ายเล็ก<input id="sBadge"></label>
+    <label>ชื่อเว็บ<input id="sTitle"></label>
+    <label>ชื่อครู (บรรทัด By)<input id="sBy"></label>
+    <label>คำอธิบายใต้ชื่อ<textarea id="sSub"></textarea></label>
+    <label>เกี่ยวกับครู<textarea id="sAbout" style="min-height:130px"></textarea></label>
+    <button class="btn primary" type="submit" style="justify-content:center">💾 บันทึก</button>
+  </form>
+</div></div>
+
+<div class="glass toast" id="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ========= ตั้งค่า Firebase (จะถูกแทนที่ด้วยค่าจริงของโปรเจกต์) ========= */
+const FB_CONFIG = {
+  apiKey: "AIzaSyBoA1pP7OyQcrGL3CJSSqZzxQ1ZrI3zVdo",
+  authDomain: "math-universe-ratana.firebaseapp.com",
+  projectId: "math-universe-ratana",
+  storageBucket: "math-universe-ratana.firebasestorage.app",
+  messagingSenderId: "1061770836047",
+  appId: "1:1061770836047:web:a4b05119da0902ca8bd23a"
+};
+/* อีเมลครูที่แก้ไขได้ (ต้องตรงกับ Firestore Rules) */
+const ADMIN_EMAILS = ["rattana44312@gmail.com"];
+/* ======================================================================= */
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const configured = !FB_CONFIG.apiKey.startsWith('YOUR_');
+let db, auth, items = [], site = {}, isAdmin = false, activeCat = 'ทั้งหมด', editingId = null, newType = 'video';
+
+const DEFAULT_SITE = {
+  badge:'✨ ผลงานการสอนคณิตศาสตร์', title:'จักรวาลคณิตศาสตร์', by:'By ครูรัตนา สีฟ้า',
+  sub:'รวมคลิปการสอน สื่อ และลิงก์ผลงานคณิตศาสตร์ ให้เรียนรู้ได้ทุกที่ทุกเวลา',
+  about:'ครูรัตนา สีฟ้า ครูผู้สอนคณิตศาสตร์ ผู้สร้างสรรค์สื่อการสอนและคลิปวิดีโอ เพื่อให้นักเรียนเข้าใจคณิตศาสตร์ได้ง่ายและสนุก\n(ครูแก้ไขข้อความนี้ได้เมื่อเข้าสู่ระบบ)'
+};
+const SAMPLE = [
+  {type:'video',title:'ตัวอย่างคลิปการสอน (แก้ไข/ลบได้)',url:'https://www.youtube.com/watch?v=dQw4w9WgXcQ',cat:'ตัวอย่าง',desc:'แทนที่ด้วยลิงก์คลิปการสอนของครู',order:1},
+  {type:'link',title:'ช่อง YouTube',url:'https://www.youtube.com/',icon:'📺',cat:'',desc:'ช่องรวมคลิปการสอน',order:1},
+  {type:'link',title:'Facebook เพจ',url:'https://www.facebook.com/',icon:'📘',cat:'',desc:'ติดตามข่าวสาร',order:2}
+];
+
+/* ---------- ยูทิลิตี้วิดีโอ ---------- */
+function parseVideo(url){
+  try{
+    const u = new URL(url), h = u.hostname.replace('www.','');
+    if(h==='youtu.be'){const id=u.pathname.slice(1);return {kind:'yt',id}}
+    if(h.endsWith('youtube.com')){
+      const list=u.searchParams.get('list'), v=u.searchParams.get('v');
+      if(v) return {kind:'yt',id:v,list};
+      const m=u.pathname.match(/\/(shorts|embed|live)\/([\w-]{6,})/); if(m) return {kind:'yt',id:m[2]};
+      if(list) return {kind:'ytlist',id:list};
+    }
+    if(h==='drive.google.com'){const m=u.pathname.match(/\/file\/d\/([^/]+)/)||[null,u.searchParams.get('id')]; if(m[1]) return {kind:'drive',id:m[1]}}
+    if(h==='vimeo.com'){const m=u.pathname.match(/(\d+)/); if(m) return {kind:'vimeo',id:m[1]}}
+    if(h.endsWith('facebook.com')||h==='fb.watch') return {kind:'fb',url}
+  }catch(e){}
+  return {kind:'other'};
+}
+function embedSrc(p){
+  switch(p.kind){
+    case 'yt': return `https://www.youtube.com/embed/${p.id}?rel=0${p.list?'&list='+p.list:''}`;
+    case 'ytlist': return `https://www.youtube.com/embed/videoseries?list=${p.id}`;
+    case 'drive': return `https://drive.google.com/file/d/${p.id}/preview`;
+    case 'vimeo': return `https://player.vimeo.com/video/${p.id}`;
+    case 'fb': return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(p.url)}&show_text=false`;
+  } return null;
+}
+function thumbOf(p){ return p.kind==='yt' ? `https://img.youtube.com/vi/${p.id}/hqdefault.jpg` : null; }
+
+/* ---------- เรนเดอร์ ---------- */
+function renderSite(){
+  const s = {...DEFAULT_SITE, ...site};
+  $('hBadge').textContent=s.badge; $('hTitle').textContent=s.title; $('hBy').textContent=s.by;
+  $('hSub').textContent=s.sub; $('about').textContent=s.about;
+  document.title = `${s.title} ${s.by}`;
+}
+function adminBtns(id){
+  return `<div class="cadm"><button class="btn sm" data-edit="${id}">✏️ แก้ไข</button><button class="btn sm danger" data-del="${id}">🗑 ลบ</button></div>`;
+}
+function render(){
+  const sorted = [...items].sort((a,b)=>(a.order??100)-(b.order??100) || (a.title||'').localeCompare(b.title||'','th'));
+  const videos = sorted.filter(i=>i.type==='video'), links = sorted.filter(i=>i.type==='link');
+  const cats = ['ทั้งหมด', ...new Set(videos.map(v=>v.cat).filter(Boolean))];
+  if(!cats.includes(activeCat)) activeCat='ทั้งหมด';
+  $('chips').innerHTML = cats.map(c=>`<button class="chip ${c===activeCat?'on':''}" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
+  $('catList').innerHTML = [...new Set(items.map(i=>i.cat).filter(Boolean))].map(c=>`<option value="${esc(c)}">`).join('');
+  const q = $('q').value.trim().toLowerCase();
+  const vf = videos.filter(v=>(activeCat==='ทั้งหมด'||v.cat===activeCat) && (!q||(v.title+' '+(v.desc||'')+' '+(v.cat||'')).toLowerCase().includes(q)));
+  $('vgrid').innerHTML = vf.length ? vf.map(v=>{
+    const p=parseVideo(v.url), t=thumbOf(p);
+    return `<article class="glass card" data-play="${v.id}">
+      <div class="thumb">${t?`<img loading="lazy" src="${t}" alt="">`:'<span class="ico">📐</span>'}<span class="play">▶</span></div>
+      <div class="cbody">${v.cat?`<span class="cat">${esc(v.cat)}</span>`:''}<div class="ctitle">${esc(v.title)}</div>
+      ${v.desc?`<div class="cdesc">${esc(v.desc)}</div>`:''}${adminBtns(v.id)}</div></article>`;
+  }).join('') : `<div class="glass empty" style="grid-column:1/-1">ยังไม่มีคลิป${isAdmin?' — กด “+ เพิ่มคลิปวิดีโอ” ด้านบน':''}</div>`;
+  $('lgrid').innerHTML = links.length ? links.map(l=>`<div class="glass lk" data-open="${l.id}" style="cursor:pointer">
+      <div class="li">${esc(l.icon||'🔗')}</div><div><b>${esc(l.title)}</b><small>${esc(l.desc||new URL(l.url).hostname)}</small></div>${adminBtns(l.id)}</div>`).join('')
+    : `<div class="glass empty" style="grid-column:1/-1">ยังไม่มีลิงก์</div>`;
+}
+
+/* ---------- Modal ---------- */
+const open = id => $(id).classList.add('open');
+const closeAll = () => { document.querySelectorAll('.modal').forEach(m=>m.classList.remove('open')); $('pBox').innerHTML=''; };
+document.addEventListener('click', e=>{
+  if(e.target.matches('[data-close]')||e.target.classList.contains('modal')) return closeAll();
+  const ed=e.target.closest('[data-edit]'); if(ed){e.stopPropagation();return openForm(ed.dataset.edit)}
+  const dl=e.target.closest('[data-del]'); if(dl){e.stopPropagation();return delItem(dl.dataset.del)}
+  const ch=e.target.closest('[data-cat]'); if(ch){activeCat=ch.dataset.cat;return render()}
+  const pl=e.target.closest('[data-play]'); if(pl) return play(pl.dataset.play);
+  const op=e.target.closest('[data-open]'); if(op){const it=items.find(i=>i.id===op.dataset.open); if(it) window.open(it.url,'_blank','noopener')}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
+function play(id){
+  const it=items.find(i=>i.id===id); if(!it) return;
+  const src=embedSrc(parseVideo(it.url));
+  $('pBox').innerHTML = src ? `<iframe class="frame" src="${esc(src)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>`
+    : `<div class="glass empty">ลิงก์นี้ฝังเล่นในเว็บไม่ได้ กดปุ่มด้านล่างเพื่อเปิดในแท็บใหม่</div>`;
+  $('pTitle').textContent=it.title; $('pDesc').textContent=it.desc||''; $('pOpen').href=it.url;
+  open('mPlay');
+}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
+
+/* ---------- ฟอร์มรายการ ---------- */
+function openForm(id, type){
+  editingId=id||null;
+  const it=id?items.find(i=>i.id===id):{type:type||'video',order:100};
+  $('fTitle').textContent=id?'แก้ไขรายการ':'เพิ่มรายการใหม่';
+  $('iTitle').value=it.title||''; $('iUrl').value=it.url||''; $('iType').value=it.type||'video';
+  $('iCat').value=it.cat||''; $('iIcon').value=it.icon||''; $('iOrder').value=it.order??100; $('iDesc').value=it.desc||'';
+  open('mItem');
+}
+$('fItem').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const data={title:$('iTitle').value.trim(),url:$('iUrl').value.trim(),type:$('iType').value,cat:$('iCat').value.trim(),
+    icon:$('iIcon').value.trim(),order:Number($('iOrder').value)||100,desc:$('iDesc').value.trim()};
+  try{
+    if(!configured) throw new Error('ยังไม่ได้ตั้งค่า Firebase');
+    if(editingId) await db.collection('items').doc(editingId).update(data);
+    else await db.collection('items').add({...data,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    closeAll(); toast('บันทึกแล้ว ✅');
+  }catch(err){toast('บันทึกไม่สำเร็จ: '+err.message)}
+});
+async function delItem(id){
+  if(!confirm('ลบรายการนี้ถาวร?')) return;
+  try{await db.collection('items').doc(id).delete();toast('ลบแล้ว')}catch(e){toast('ลบไม่สำเร็จ: '+e.message)}
+}
+$('btnAddVideo').onclick=()=>openForm(null,'video');
+$('btnAddLink').onclick=()=>openForm(null,'link');
+$('btnSeed').onclick=async()=>{
+  if(!confirm('เพิ่มข้อมูลตัวอย่าง 3 รายการ?')) return;
+  for(const s of SAMPLE) await db.collection('items').add({...s,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+  toast('เพิ่มตัวอย่างแล้ว');
+};
+$('btnSite').onclick=()=>{
+  const s={...DEFAULT_SITE,...site};
+  $('sBadge').value=s.badge;$('sTitle').value=s.title;$('sBy').value=s.by;$('sSub').value=s.sub;$('sAbout').value=s.about;
+  open('mSite');
+};
+$('fSite').addEventListener('submit', async e=>{
+  e.preventDefault();
+  try{
+    await db.collection('settings').doc('site').set({badge:$('sBadge').value,title:$('sTitle').value,by:$('sBy').value,sub:$('sSub').value,about:$('sAbout').value});
+    closeAll(); toast('บันทึกแล้ว ✅');
+  }catch(err){toast('บันทึกไม่สำเร็จ: '+err.message)}
+});
+$('q').addEventListener('input',render);
+
+/* ---------- Firebase ---------- */
+function setAdmin(user){
+  isAdmin = !!user && ADMIN_EMAILS.map(x=>x.toLowerCase()).includes((user.email||'').toLowerCase());
+  document.body.classList.toggle('admin',isAdmin);
+  $('btnLogin').style.display=user?'none':'';
+  $('btnLogout').style.display=user?'':'none';
+  $('who').textContent=user?(isAdmin?`👩‍🏫 ${user.displayName||user.email}`:`${user.email} (ไม่มีสิทธิ์แก้ไข)`):'';
+  render();
+}
+if(configured){
+  firebase.initializeApp(FB_CONFIG);
+  db=firebase.firestore(); auth=firebase.auth();
+  auth.onAuthStateChanged(setAdmin);
+  $('btnLogin').onclick=()=>auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(e=>toast('เข้าสู่ระบบไม่สำเร็จ: '+e.message));
+  $('btnLogout').onclick=()=>auth.signOut();
+  db.collection('items').onSnapshot(s=>{items=s.docs.map(d=>({id:d.id,...d.data()}));render()},
+    e=>{$('warn').style.display='block';$('warn').textContent='โหลดข้อมูลไม่ได้: '+e.message});
+  db.collection('settings').doc('site').onSnapshot(d=>{site=d.exists?d.data():{};renderSite()});
+}else{
+  $('warn').style.display='block';
+  $('warn').innerHTML='⚠️ ยังไม่ได้ใส่ <b>firebaseConfig</b> — กำลังแสดงข้อมูลตัวอย่างเท่านั้น (แก้ไขไม่ได้)';
+  items=SAMPLE.map((s,i)=>({...s,id:'s'+i}));
+  $('btnLogin').onclick=()=>toast('ต้องตั้งค่า Firebase ก่อน');
+}
+
+/* ---------- ตกแต่ง: สัญลักษณ์คณิตศาสตร์ลอย ---------- */
+(function(){
+  const syms=['∑','π','√','∞','÷','×','±','∫','Δ','θ','%','=','x²','∠','≈'];
+  const box=$('sym');
+  for(let i=0;i<22;i++){
+    const s=document.createElement('span');
+    s.textContent=syms[i%syms.length];
+    s.style.left=Math.random()*100+'%';
+    s.style.fontSize=(24+Math.random()*60)+'px';
+    s.style.animationDuration=(28+Math.random()*40)+'s';
+    s.style.animationDelay=(-Math.random()*50)+'s';
+    box.appendChild(s);
+  }
+  $('yr').textContent=new Date().getFullYear()+543;
+})();
+renderSite(); render();
+</script>
+</body>
+</html>
