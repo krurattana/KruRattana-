@@ -110,6 +110,28 @@ nav .brand{display:flex;align-items:center;gap:10px}
 .phone.tablet iframe{border-radius:20px}
 .seg{display:flex;gap:8px}
 body.student .admonly,body.student #btnLogin,body.student #btnLogout,body.student #who,body.student #btnPhone,body.student .admbar{display:none!important}
+/* ===== แถบภาพกิจกรรม ===== */
+#gallery{margin-bottom:30px}
+.gal-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.gal-nav{display:flex;gap:8px}
+.gal-nav .btn{width:38px;height:38px;padding:0;justify-content:center;font-size:1.1rem}
+.strip{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 4px 16px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.35) transparent}
+.strip::-webkit-scrollbar{height:8px}.strip::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);border-radius:8px}
+.ph{flex:0 0 clamp(210px,26vw,290px);scroll-snap-align:start;position:relative;border-radius:18px;overflow:hidden;cursor:pointer;aspect-ratio:4/3;border:1px solid var(--border);background:rgba(255,255,255,.1);box-shadow:0 8px 26px rgba(0,10,60,.4);transition:.3s}
+.ph:hover{transform:translateY(-4px) scale(1.02)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph .cap{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;font-size:.82rem;line-height:1.35;background:linear-gradient(transparent,rgba(2,10,50,.88))}
+.ph .cap small{display:block;color:var(--muted);font-size:.72rem;margin-top:2px}
+.ph .pact{position:absolute;top:8px;right:8px;display:none;gap:6px}
+body.admin .ph .pact{display:flex}
+.ph .pact button{width:30px;height:30px;border-radius:50%;border:1px solid var(--border);background:rgba(2,10,50,.7);color:#fff;cursor:pointer}
+.gal-empty{padding:26px;text-align:center;color:var(--muted)}
+.lb{display:grid;gap:10px;justify-items:center}
+.lb img{max-width:100%;max-height:68vh;border-radius:14px;object-fit:contain;background:rgba(0,0,0,.25)}
+.lb .row2{display:flex;gap:10px;align-items:center;justify-content:center}
+#prog{font-size:.85rem;color:var(--muted);min-height:1.2em}
+.dz{border:2px dashed var(--border);border-radius:16px;padding:18px;text-align:center;color:var(--muted)}
+.prev{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.prev img{width:56px;height:56px;object-fit:cover;border-radius:8px}
 </style>
 </head>
 <body>
@@ -136,6 +158,7 @@ body.student .admonly,body.student #btnLogin,body.student #btnLogout,body.studen
     <p class="sub" id="hSub">รวมคลิปการสอน สื่อ และลิงก์ผลงานคณิตศาสตร์ ให้เรียนรู้ได้ทุกที่ทุกเวลา</p>
     <div class="acts">
       <a class="btn primary" href="#videos">▶ ดูคลิปการสอน</a>
+      <a class="btn" href="#gallery">📸 ภาพกิจกรรม</a>
       <a class="btn" href="#links">🔗 ลิงก์อื่นๆ</a>
       <button class="btn admonly" id="btnSite">⚙️ แก้ไขหัวเว็บ</button>
     </div>
@@ -145,8 +168,17 @@ body.student .admonly,body.student #btnLogin,body.student #btnLogout,body.studen
     <b>🛠 โหมดครู</b>
     <button class="btn primary sm" id="btnAddVideo">+ เพิ่มคลิปวิดีโอ</button>
     <button class="btn primary sm" id="btnAddLink">+ เพิ่มลิงก์</button>
+    <button class="btn primary sm" id="btnAddPhoto">+ เพิ่มภาพกิจกรรม</button>
     <button class="btn sm" id="btnSeed">📥 ใส่ตัวอย่างข้อมูล</button>
   </div>
+
+  <section id="gallery">
+    <div class="gal-head">
+      <h2 class="sec">📸 ภาพกิจกรรม</h2>
+      <div class="gal-nav"><button class="btn" id="galPrev" aria-label="ก่อนหน้า">‹</button><button class="btn" id="galNext" aria-label="ถัดไป">›</button></div>
+    </div>
+    <div class="strip" id="strip"></div>
+  </section>
 
   <section id="videos">
     <h2 class="sec">🎬 คลิปการสอน</h2>
@@ -221,6 +253,31 @@ body.student .admonly,body.student #btnLogin,body.student #btnLogout,body.studen
     <div class="seg"><button class="btn sm primary" data-dev="phone">📱 มือถือ</button><button class="btn sm" data-dev="tablet">📟 แท็บเล็ต</button><a class="btn sm" id="stuOpen" target="_blank" rel="noopener">↗ เปิดแท็บใหม่</a></div>
     <div class="phone" id="phone"><iframe id="phoneFrame" title="มุมมองนักเรียน" loading="lazy"></iframe></div>
   </div>
+</div></div>
+
+<!-- Photo viewer modal -->
+<div class="modal" id="mPhotoView"><div class="glass mbox" style="max-width:980px">
+  <button class="mclose" data-close>×</button>
+  <div class="lb">
+    <img id="lbImg" alt="ภาพกิจกรรม">
+    <div><b id="lbCap"></b><div id="lbDate" style="color:var(--muted);font-size:.85rem"></div></div>
+    <div class="row2"><button class="btn sm" id="lbPrev">‹ ก่อนหน้า</button><a class="btn sm" id="lbOpen" target="_blank" rel="noopener">เปิดใน Drive ↗</a><button class="btn sm" id="lbNext">ถัดไป ›</button></div>
+  </div>
+</div></div>
+
+<!-- Photo upload modal -->
+<div class="modal" id="mPhoto"><div class="glass mbox" style="max-width:560px">
+  <button class="mclose" data-close>×</button>
+  <h3>เพิ่มภาพกิจกรรม</h3>
+  <form class="f" id="fPhoto">
+    <div class="dz">เลือกรูปได้หลายรูป (ระบบย่อรูปให้อัตโนมัติ แล้วเก็บใน Google Drive ของครู)
+      <input id="pFiles" type="file" accept="image/*" multiple style="margin-top:10px;max-width:100%"><div class="prev" id="pPrev"></div></div>
+    <label>คำบรรยายภาพ (ใช้กับทุกรูปที่เลือก ไม่ใส่ก็ได้)<input id="pCap" placeholder="เช่น กิจกรรมแข่งขันคณิตศาสตร์"></label>
+    <label>วันที่จัดกิจกรรม<input id="pDate" type="date"></label>
+    <label>รหัสครู (API_KEY จากหลังบ้าน — จำไว้ในเครื่องนี้)<input id="pKey" type="password" autocomplete="off" placeholder="วางรหัสครั้งเดียว"></label>
+    <div id="prog"></div>
+    <button class="btn primary" type="submit" id="pGo" style="justify-content:center">⬆️ อัปโหลดไป Google Drive</button>
+  </form>
 </div></div>
 
 <div class="glass toast" id="toast"></div>
@@ -402,10 +459,102 @@ document.addEventListener('click',e=>{
   document.querySelectorAll('[data-dev]').forEach(b=>b.classList.toggle('primary',b===d));
 });
 
+/* ---------- แถบภาพกิจกรรม (Google Drive + Google Sheet ผ่าน Apps Script) ---------- */
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyWXQ2pTy2hssyJzaSGJ-eFf8OeefEHNDM85PX7l1fuHrBMuEs2IgDkO1BhOorxQeKU_A/exec';
+let photos = [], lbIdx = 0, galLoaded = false, galTried = false;
+const thumb = (id,w) => `https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w${w}`;
+const thumbAlt = (id,w) => `https://lh3.googleusercontent.com/d/${encodeURIComponent(id)}=w${w}`;
+const fmtDate = n => { const s=String(n||''); if(!/^\d{8}$/.test(s)) return ''; return new Date(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8)).toLocaleDateString('th-TH',{day:'numeric',month:'long',year:'numeric'}); };
+const gasPost = body => fetch(GAS_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)}).then(r=>r.json()).then(j=>{ if(!j.ok) throw new Error(j.error==='Unauthorized'?'รหัสครูไม่ถูกต้อง':j.error); return j.data; });
+const gasKey = () => { try{return localStorage.getItem('gasKey')||''}catch(e){return ''} };
+
+async function loadGallery(){
+  try{
+    const j = await fetch(GAS_URL+'?action=list&table=Activities').then(r=>r.json());
+    if(!j.ok) throw new Error(j.error);
+    photos = (j.data.rows||[]).filter(p=>p.fileId).sort((a,b)=>(Number(b.date)||0)-(Number(a.date)||0) || String(b.createdAt).localeCompare(String(a.createdAt)));
+    galLoaded = true;
+  }catch(e){ galLoaded = false; console.warn('gallery',e); }
+  galTried = true; renderGallery();
+}
+function renderGallery(){
+  const sec=$('gallery'), st=$('strip');
+  if(!photos.length && !isAdmin){ sec.style.display = (galTried ? 'none' : ''); if(!galTried) st.innerHTML='<div class="glass gal-empty" style="flex:1">กำลังโหลดภาพกิจกรรม…</div>'; return; }
+  sec.style.display='';
+  st.innerHTML = photos.length ? photos.map((p,i)=>`
+    <div class="ph" data-i="${i}">
+      <img src="${thumb(p.fileId,600)}" data-alt="${thumbAlt(p.fileId,600)}" alt="${esc(p.caption||'ภาพกิจกรรม')}" loading="lazy" referrerpolicy="no-referrer">
+      ${(p.caption||p.date)?`<div class="cap">${esc(p.caption||'')}<small>${fmtDate(p.date)}</small></div>`:''}
+      <div class="pact"><button data-edit="${esc(p.id)}" title="แก้คำบรรยาย">✏️</button><button data-del="${esc(p.id)}" title="ลบภาพ">🗑</button></div>
+    </div>`).join('') : `<div class="glass gal-empty" style="flex:1">ยังไม่มีภาพกิจกรรม — กด “+ เพิ่มภาพกิจกรรม” ด้านบน</div>`;
+  st.querySelectorAll('img[data-alt]').forEach(im=>im.addEventListener('error',()=>{ if(im.dataset.alt && im.src!==im.dataset.alt){ im.src=im.dataset.alt; im.removeAttribute('data-alt'); } },{once:true}));
+}
+$('strip').addEventListener('click',async e=>{
+  const ed=e.target.closest('[data-edit]'), dl=e.target.closest('[data-del]');
+  if(ed||dl){
+    e.stopPropagation();
+    const id=(ed||dl).dataset.edit||(ed||dl).dataset.del, p=photos.find(x=>x.id===id); if(!p) return;
+    let key=gasKey(); if(!key){ key=prompt('วางรหัสครู (API_KEY)'); if(!key) return; try{localStorage.setItem('gasKey',key)}catch(_){} }
+    try{
+      if(ed){ const c=prompt('คำบรรยายภาพ',p.caption||''); if(c===null) return; await gasPost({action:'update',table:'Activities',id,data:{caption:c},key}); p.caption=c; toast('บันทึกแล้ว ✅'); }
+      else { if(!confirm('ลบภาพนี้ (รวมทั้งไฟล์ใน Drive)?')) return; await gasPost({action:'delete',table:'Activities',id,key}); photos=photos.filter(x=>x.id!==id); toast('ลบแล้ว'); }
+      renderGallery();
+    }catch(err){ toast('ไม่สำเร็จ: '+err.message); if(/รหัส/.test(err.message)) try{localStorage.removeItem('gasKey')}catch(_){} }
+    return;
+  }
+  const c=e.target.closest('.ph'); if(c) showPhoto(+c.dataset.i);
+});
+function showPhoto(i){
+  if(!photos.length) return; lbIdx=(i+photos.length)%photos.length; const p=photos[lbIdx];
+  const im=$('lbImg'); im.src=thumb(p.fileId,1600); im.onerror=()=>{ if(!im.src.includes('googleusercontent')) im.src=thumbAlt(p.fileId,1600); };
+  $('lbCap').textContent=p.caption||''; $('lbDate').textContent=fmtDate(p.date);
+  $('lbOpen').href='https://drive.google.com/file/d/'+encodeURIComponent(p.fileId)+'/view';
+  open('mPhotoView');
+}
+$('lbPrev').onclick=()=>showPhoto(lbIdx-1); $('lbNext').onclick=()=>showPhoto(lbIdx+1);
+document.addEventListener('keydown',e=>{ if(!$('mPhotoView').classList.contains('open')) return; if(e.key==='ArrowLeft') showPhoto(lbIdx-1); if(e.key==='ArrowRight') showPhoto(lbIdx+1); });
+const stepStrip = d => $('strip').scrollBy({left:d*Math.max(240,$('strip').clientWidth*.8),behavior:'smooth'});
+$('galPrev').onclick=()=>stepStrip(-1); $('galNext').onclick=()=>stepStrip(1);
+
+/* อัปโหลด (ครู) */
+$('btnAddPhoto').onclick=()=>{ $('pKey').value=gasKey(); $('pDate').value=new Date().toLocaleDateString('en-CA'); $('pFiles').value=''; $('pPrev').innerHTML=''; $('pCap').value=''; $('prog').textContent=''; open('mPhoto'); };
+$('pFiles').addEventListener('change',()=>{ $('pPrev').innerHTML=[...$('pFiles').files].slice(0,12).map(f=>`<img src="${URL.createObjectURL(f)}" alt="">`).join(''); });
+async function shrink(file,max=1600){
+  const bmp=await createImageBitmap(file); const k=Math.min(1,max/Math.max(bmp.width,bmp.height));
+  const c=document.createElement('canvas'); c.width=Math.round(bmp.width*k); c.height=Math.round(bmp.height*k);
+  c.getContext('2d').drawImage(bmp,0,0,c.width,c.height);
+  const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',.82));
+  return await new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(String(fr.result).split(',')[1]);fr.onerror=rej;fr.readAsDataURL(blob)});
+}
+$('fPhoto').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const files=[...$('pFiles').files], key=$('pKey').value.trim();
+  if(!files.length) return toast('เลือกรูปก่อน'); if(!key) return toast('ใส่รหัสครู');
+  const date=Number(($('pDate').value||'').replace(/-/g,''))||0, cap=$('pCap').value.trim(), btn=$('pGo'); btn.disabled=true;
+  let ok=0;
+  try{
+    for(let i=0;i<files.length;i++){
+      $('prog').textContent=`กำลังอัปโหลด ${i+1}/${files.length}…`;
+      const base64=await shrink(files[i]);
+      const row=await gasPost({action:'upload',key,data:{base64,mimeType:'image/jpeg',name:(files[i].name||'photo').replace(/\.[^.]+$/,'')+'.jpg',caption:cap,date}});
+      photos.unshift(row); ok++;
+    }
+    try{localStorage.setItem('gasKey',key)}catch(_){}
+    photos.sort((a,b)=>(Number(b.date)||0)-(Number(a.date)||0) || String(b.createdAt).localeCompare(String(a.createdAt)));
+    renderGallery(); closeAll(); toast(`เพิ่มภาพแล้ว ${ok} รูป ✅`);
+  }catch(err){
+    $('prog').textContent='ไม่สำเร็จ: '+err.message+(ok?` (อัปโหลดสำเร็จแล้ว ${ok} รูป)`:'');
+    if(/รหัส/.test(err.message)) try{localStorage.removeItem('gasKey')}catch(_){}
+    if(ok) renderGallery();
+  }finally{ btn.disabled=false; }
+});
+loadGallery();
+
 /* ---------- Firebase ---------- */
 function setAdmin(user){
   isAdmin = !STUDENT && !!user && ADMIN_EMAILS.map(x=>x.toLowerCase()).includes((user.email||'').toLowerCase());
   document.body.classList.toggle('admin',isAdmin);
+  if(typeof renderGallery==='function') renderGallery();
   $('btnLogin').style.display=user?'none':'';
   $('btnLogout').style.display=user?'':'none';
   $('who').textContent=user?(isAdmin?`👩‍🏫 ${user.displayName||user.email}`:`${user.email} (ไม่มีสิทธิ์แก้ไข)`):'';
