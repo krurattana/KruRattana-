@@ -96,6 +96,20 @@ body.admin .admonly{display:inline-flex}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);padding:12px 22px;z-index:99;transition:.35s;opacity:0}
 .toast.show{transform:translateX(-50%);opacity:1}
 .warn{padding:12px 18px;margin-bottom:18px;border-color:rgba(255,200,80,.6);color:#ffe9b0;display:none;line-height:1.6;font-size:.9rem}
+
+.logo{width:42px;height:42px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 4px 14px rgba(0,30,120,.5);border:1px solid var(--border);background:rgba(255,255,255,.12)}
+.logo.big{width:104px;height:104px;margin:0 auto 14px;display:block;animation:pulse 5s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.05);box-shadow:0 0 38px rgba(92,200,255,.6)}}
+nav .brand{display:flex;align-items:center;gap:10px}
+.phone-wrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+.phone{width:min(404px,92vw);height:min(790px,78vh);border-radius:46px;padding:12px;background:linear-gradient(145deg,#1b2a55,#060c24);box-shadow:0 20px 60px rgba(0,0,0,.6),inset 0 0 0 2px rgba(255,255,255,.18);position:relative;transition:.3s}
+.phone.tablet{width:min(780px,94vw);height:min(640px,72vh);border-radius:30px}
+.phone::before{content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);width:96px;height:22px;border-radius:14px;background:#000;z-index:2}
+.phone.tablet::before{display:none}
+.phone iframe{width:100%;height:100%;border:0;border-radius:36px;background:#0a2a7a}
+.phone.tablet iframe{border-radius:20px}
+.seg{display:flex;gap:8px}
+body.student .admonly,body.student #btnLogin,body.student #btnLogout,body.student #who,body.student #btnPhone,body.student .admbar{display:none!important}
 </style>
 </head>
 <body>
@@ -104,9 +118,10 @@ body.admin .admonly{display:inline-flex}
 
 <div class="wrap">
   <nav class="glass">
-    <div class="brand">∑ จักรวาลคณิตศาสตร์</div>
+    <div class="brand"><img class="logo" id="navLogo" alt="โลโก้"><span>จักรวาลคณิตศาสตร์</span></div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
       <span id="who" style="font-size:.85rem;color:var(--muted)"></span>
+      <button class="btn sm" id="btnPhone">📱 มุมมองนักเรียน</button>
       <button class="btn sm" id="btnLogin">🔐 ครูเข้าสู่ระบบ</button>
       <button class="btn sm" id="btnLogout" style="display:none">ออกจากระบบ</button>
     </div>
@@ -115,7 +130,7 @@ body.admin .admonly{display:inline-flex}
   <div class="glass warn" id="warn"></div>
 
   <header class="glass hero">
-    <span class="badge" id="hBadge">✨ ผลงานการสอนคณิตศาสตร์</span>
+    <img class="logo big" id="heroLogo" alt="โลโก้จักรวาลคณิตศาสตร์"><span class="badge" id="hBadge">✨ ผลงานการสอนคณิตศาสตร์</span>
     <h1 id="hTitle">จักรวาลคณิตศาสตร์</h1>
     <div class="by" id="hBy">By ครูรัตนา สีฟ้า</div>
     <p class="sub" id="hSub">รวมคลิปการสอน สื่อ และลิงก์ผลงานคณิตศาสตร์ ให้เรียนรู้ได้ทุกที่ทุกเวลา</p>
@@ -187,6 +202,7 @@ body.admin .admonly{display:inline-flex}
   <button class="mclose" data-close>×</button>
   <h3>แก้ไขหัวเว็บ / เกี่ยวกับครู</h3>
   <form class="f" id="fSite">
+    <label>ลิงก์รูปโลโก้ (URL รูป .png/.jpg/.svg เว้นว่าง = ใช้โลโก้เริ่มต้น)<input id="sLogo" type="url" placeholder="https://..."></label>
     <label>ป้ายเล็ก<input id="sBadge"></label>
     <label>ชื่อเว็บ<input id="sTitle"></label>
     <label>ชื่อครู (บรรทัด By)<input id="sBy"></label>
@@ -194,6 +210,17 @@ body.admin .admonly{display:inline-flex}
     <label>เกี่ยวกับครู<textarea id="sAbout" style="min-height:130px"></textarea></label>
     <button class="btn primary" type="submit" style="justify-content:center">💾 บันทึก</button>
   </form>
+</div></div>
+
+<!-- Phone preview modal -->
+<div class="modal" id="mPhone"><div class="glass mbox" style="max-width:860px;text-align:center">
+  <button class="mclose" data-close>×</button>
+  <h3 style="margin:0 0 4px">📱 ตัวอย่างมุมมองนักเรียน</h3>
+  <p style="color:var(--muted);font-size:.85rem;margin-bottom:12px">ลองเลื่อน กดดูคลิป และค้นหาได้เหมือนนักเรียนใช้งานจริง (ไม่แสดงปุ่มแก้ไข)</p>
+  <div class="phone-wrap">
+    <div class="seg"><button class="btn sm primary" data-dev="phone">📱 มือถือ</button><button class="btn sm" data-dev="tablet">📟 แท็บเล็ต</button><a class="btn sm" id="stuOpen" target="_blank" rel="noopener">↗ เปิดแท็บใหม่</a></div>
+    <div class="phone" id="phone"><iframe id="phoneFrame" title="มุมมองนักเรียน" loading="lazy"></iframe></div>
+  </div>
 </div></div>
 
 <div class="glass toast" id="toast"></div>
@@ -217,6 +244,9 @@ const ADMIN_EMAILS = ["rattana44312@gmail.com"];
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const STUDENT = new URLSearchParams(location.search).get('student')==='1';
+if(STUDENT) document.body.classList.add('student');
+const DEFAULT_LOGO = 'data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38b6ff"/><stop offset="1" stop-color="#0a2a7a"/></linearGradient><radialGradient id="h" cx=".3" cy=".25" r=".8"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><circle cx="60" cy="60" r="58" fill="url(#g)"/><circle cx="60" cy="60" r="58" fill="url(#h)"/><ellipse cx="60" cy="60" rx="50" ry="17" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2.5" transform="rotate(-28 60 60)"/><circle cx="104" cy="42" r="5.5" fill="#fff"/><text x="60" y="76" font-family="Georgia,serif" font-size="56" font-weight="700" fill="#fff" text-anchor="middle">&#8721;</text><text x="29" y="36" font-family="Georgia,serif" font-size="20" fill="#fff" fill-opacity=".85">&#960;</text><text x="82" y="100" font-family="Georgia,serif" font-size="17" fill="#fff" fill-opacity=".8">&#8730;</text></svg>`);
 const configured = !FB_CONFIG.apiKey.startsWith('YOUR_');
 let db, auth, items = [], site = {}, isAdmin = false, activeCat = 'ทั้งหมด', editingId = null, newType = 'video';
 
@@ -265,6 +295,9 @@ function renderSite(){
   $('hBadge').textContent=s.badge; $('hTitle').textContent=s.title; $('hBy').textContent=s.by;
   $('hSub').textContent=s.sub; $('about').textContent=s.about;
   document.title = `${s.title} ${s.by}`;
+  const logo = (s.logo||'').trim() || DEFAULT_LOGO;
+  ['navLogo','heroLogo'].forEach(id=>{const el=$(id); el.onerror=()=>{el.onerror=null;el.src=DEFAULT_LOGO}; el.src=logo});
+  let fav=document.querySelector('link[rel=icon]'); if(!fav){fav=document.createElement('link');fav.rel='icon';document.head.appendChild(fav)} fav.href=logo;
 }
 function adminBtns(id){
   return `<div class="cadm"><button class="btn sm" data-edit="${id}">✏️ แก้ไข</button><button class="btn sm danger" data-del="${id}">🗑 ลบ</button></div>`;
@@ -345,21 +378,33 @@ $('btnSeed').onclick=async()=>{
 };
 $('btnSite').onclick=()=>{
   const s={...DEFAULT_SITE,...site};
-  $('sBadge').value=s.badge;$('sTitle').value=s.title;$('sBy').value=s.by;$('sSub').value=s.sub;$('sAbout').value=s.about;
+  $('sLogo').value=s.logo||'';$('sBadge').value=s.badge;$('sTitle').value=s.title;$('sBy').value=s.by;$('sSub').value=s.sub;$('sAbout').value=s.about;
   open('mSite');
 };
 $('fSite').addEventListener('submit', async e=>{
   e.preventDefault();
   try{
-    await db.collection('settings').doc('site').set({badge:$('sBadge').value,title:$('sTitle').value,by:$('sBy').value,sub:$('sSub').value,about:$('sAbout').value});
+    await db.collection('settings').doc('site').set({logo:$('sLogo').value.trim(),badge:$('sBadge').value,title:$('sTitle').value,by:$('sBy').value,sub:$('sSub').value,about:$('sAbout').value});
     closeAll(); toast('บันทึกแล้ว ✅');
   }catch(err){toast('บันทึกไม่สำเร็จ: '+err.message)}
 });
 $('q').addEventListener('input',render);
 
+/* ---------- มุมมองนักเรียนบนมือถือ ---------- */
+const stuUrl = () => location.origin + location.pathname + '?student=1';
+$('btnPhone').onclick = () => {
+  const f=$('phoneFrame'); if(!f.src||f.src==='about:blank'||!f.src.includes('student=1')) f.src=stuUrl();
+  $('stuOpen').href=stuUrl(); open('mPhone');
+};
+document.addEventListener('click',e=>{
+  const d=e.target.closest('[data-dev]'); if(!d) return;
+  $('phone').classList.toggle('tablet',d.dataset.dev==='tablet');
+  document.querySelectorAll('[data-dev]').forEach(b=>b.classList.toggle('primary',b===d));
+});
+
 /* ---------- Firebase ---------- */
 function setAdmin(user){
-  isAdmin = !!user && ADMIN_EMAILS.map(x=>x.toLowerCase()).includes((user.email||'').toLowerCase());
+  isAdmin = !STUDENT && !!user && ADMIN_EMAILS.map(x=>x.toLowerCase()).includes((user.email||'').toLowerCase());
   document.body.classList.toggle('admin',isAdmin);
   $('btnLogin').style.display=user?'none':'';
   $('btnLogout').style.display=user?'':'none';
